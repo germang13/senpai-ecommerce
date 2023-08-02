@@ -1,0 +1,29 @@
+{
+  "name": "senpai-ecommerce",
+  "version": "1.0.0",
+  "description": "fsdb3-2023",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/germang13/senpai-ecommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/germang13/senpai-ecommerce/issues"
+  },
+  "homepage": "https://github.com/germang13/senpai-ecommerce#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "knex": "^2.5.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
