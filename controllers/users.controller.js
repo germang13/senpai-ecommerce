@@ -1,4 +1,5 @@
 const knex = require("../knexfile");
+const { matchedData } = require("express-validator");
 
 const TABLA_USUARIOS = "usuarios";
 
@@ -34,8 +35,9 @@ exports.getUser = async (req, res, next) => {
 };
 
 exports.createUser = async (req, res, next) => {
+  const newUser = matchedData(req); //new user solo tendra los campos que se validan en el validator
   try {
-    const respuestaBd = await knex(TABLA_USUARIOS).insert(req.body, "*");
+    const respuestaBd = await knex(TABLA_USUARIOS).insert(newUser, "*");
     res.status(201);
     res.json(respuestaBd[0]);
   } catch (e) {
