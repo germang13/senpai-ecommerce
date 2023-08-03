@@ -1,4 +1,5 @@
 const { checkSchema } = require("express-validator");
+const knex = require("../../knexfile");
 
 // Pongo las constantes para no tener que estar cambiando el mensaje si cambian los largos de los campos
 const nameLengths = { min: 3, max: 100 };
@@ -35,9 +36,12 @@ module.exports = checkSchema({
     isEmail: true,
     optional: false,
     custom: {
-      options: (value) => {
-        const exists = false; // consultar en la base de datos si hay un usuario con ese email
-        if (exists) {
+      options: async (value) => {
+        const queryResponse = await knex("usuarios").where({
+          email: value,
+        });
+        const user = queryResponse[0];
+        if (user) {
           throw new Error("Ya existe un usuario con ese email");
         }
         return true;

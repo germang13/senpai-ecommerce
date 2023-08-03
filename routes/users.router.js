@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 const postValidator = require("../validators/users/users-post.validators");
 const runValidation = require("../validators");
-const { createUser } = require("../controllers/users.controller");
+const {
+  createUser,
+  getUser,
+  getAllUsers,
+} = require("../controllers/users.controller");
 
-router.get("/");
+router.get("/", getAllUsers);
 
-router.get("/:id");
+router.get("/:id", getUser);
 
 router.post("/", postValidator, runValidation, createUser);
 

@@ -16,7 +16,7 @@ app.use(requestTrackingMiddleware);
 app.use(initalLogging);
 
 // routers
-app.use("/users", usersRouter);
+app.use("/usuarios", usersRouter);
 
 // middlewares post resolucion
 app.use(finalLogging);
