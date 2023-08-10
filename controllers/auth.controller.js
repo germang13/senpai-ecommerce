@@ -16,13 +16,11 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   const { email, contrasenia } = req.body;
 
-  const respuestaUsuarios = await knex("usuarios").where("email", email);
-  const usuario = respuestaUsuarios[0];
+  const usuario = await knex("usuarios").where("email", email).first();
 
   if (!usuario) {
     res.status(404).json({ mensje: "usuario/contraseña incorrecta" });
-    next();
-    return;
+    return next();
   }
 
   const contraseniaValida = await bcrypt.compare(
@@ -32,8 +30,7 @@ exports.login = async (req, res, next) => {
 
   if (!contraseniaValida) {
     res.status(404).json({ mensje: "usuario/contraseña incorrecta" });
-    next();
-    return;
+    return next();
   }
 
   sendToken(res, next, email, usuario.nombre);
