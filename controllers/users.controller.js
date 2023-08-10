@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res, next) => {
       `%${req.query.nombre}%`
     );
   } else {
-    result = await knex(TABLA_USUARIOS).select();
+    result = await knex(TABLA_USUARIOS).select().orderByRaw("random()");
   }
 
   res.json(result);
@@ -21,7 +21,10 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   //   const respuestaBd = await knex(TABLA_USUARIOS).where("id", req.params.id);
-  const respuestaBd = await knex(TABLA_USUARIOS).where({ id: req.params.id });
+
+  const respuestaBd = await knex(TABLA_USUARIOS).where({
+    email: req.usuario.email,
+  });
 
   const usuario = respuestaBd[0];
   if (usuario) {
@@ -35,7 +38,7 @@ exports.getUser = async (req, res, next) => {
 };
 
 exports.createUser = async (req, res, next) => {
-  const newUser = matchedData(req); //new user solo tendra los campos que se validan en el validator
+  const newUser = matchedData(req);
   try {
     const respuestaBd = await knex(TABLA_USUARIOS).insert(newUser, "*");
     res.status(201);
